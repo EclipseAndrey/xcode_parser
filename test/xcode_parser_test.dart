@@ -35,6 +35,31 @@ void main() {
       expect(pbxproj.childrenList, isEmpty);
     });
 
+    test('Open Pbxproj file with multiple comments', () async {
+      final inputContents = '''// !\$*UTF8*\$!
+{
+	// !\$*UTF8*\$!
+	// !\$*UTF8*\$!
+	// !\$*UTF8*\$!
+	// !\$*UTF8*\$!
+	// !\$*UTF8*\$!
+	// !\$*UTF8*\$!
+	// !\$*UTF8*\$!
+	archiveVersion = 1;
+	classes = {};
+	objectVersion = 54;
+}''';
+      final file = File(tempFilePath);
+      await file.create(recursive: true);
+      await file.writeAsString(inputContents);
+
+      final pbxproj = await Pbxproj.open(tempFilePath);
+      await pbxproj.save();
+
+      final outputContents = file.readAsStringSync();
+      expect(inputContents, outputContents);
+    });
+
     test('Open Pbxproj file with content', () async {
       final file = File(tempFilePath);
       await file.create(recursive: true);

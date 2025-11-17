@@ -29,7 +29,7 @@ void main() {
 
     test('Open Pbxproj file', () async {
       final file = File(tempFilePath);
-      await file.writeAsString('// !\$*UTF8*\$!\n{}');
+      await file.writeAsString('// !\$*UTF8*\$!\n{\n // !\$*UTF8*\$!\n}');
       final openedProject = await Pbxproj.open(tempFilePath);
       expect(openedProject.path, tempFilePath);
 
@@ -41,8 +41,9 @@ void main() {
     });
 
     test('Open Pbxproj file from string', () {
-      final openedProject =
-          Pbxproj.parse('// !\$*UTF8*\$!\n{}', path: tempFilePath);
+      final openedProject = Pbxproj.parse(
+          '// !\$*UTF8*\$!\n{\n // !\$*UTF8*\$!\n}',
+          path: tempFilePath);
       expect(openedProject.path, tempFilePath);
 
       expect(

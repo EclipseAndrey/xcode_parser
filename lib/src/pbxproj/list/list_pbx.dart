@@ -39,11 +39,13 @@ class ListPbx extends NamedComponent {
     _children.insertAll(index, iterable);
   }
 
-  int indexOf(ElementOfListPbx element, [int start = 0]) => _children.indexOf(element, start);
+  int indexOf(ElementOfListPbx element, [int start = 0]) =>
+      _children.indexOf(element, start);
 
   bool any(bool Function(ElementOfListPbx e) test) => _children.any(test);
 
-  int indexWhere(bool Function(ElementOfListPbx e) test, [int start = 0]) => _children.indexWhere(test, start);
+  int indexWhere(bool Function(ElementOfListPbx e) test, [int start = 0]) =>
+      _children.indexWhere(test, start);
 
   ElementOfListPbx get first => _children.first;
 
