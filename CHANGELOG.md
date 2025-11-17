@@ -1,3 +1,8 @@
+## 1.3.1
+- Fixed leading comment count increase
+- Fixed saving file with multiple comments
+- Added function to array modifications
+
 ## 1.2.0
 
 - Added Web support with Pbxproj.parse constructor to parse the String Pbxproj content
