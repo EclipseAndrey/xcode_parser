@@ -39,7 +39,7 @@ files, which is especially useful for automating iOS development tasks.
 Incorporate the package into your Dart or Flutter project by adding it as a dependency in your `pubspec.yaml` file:
 ```yaml
 dependencies:
-  xcode_parser: ^1.2.1
+  xcode_parser: ^2.0.0
 ```
 or
 ```shell
@@ -166,6 +166,8 @@ manage mappings in Xcode project files (`*.pbxproj`).
 - `replaceOrAdd(NamedComponent component)` - Replaces an existing component in the mapping or adds a new one if a component with such UUID is not found.
 - `find<T extends NamedComponent>(String key)` - Searches for a component in the mapping by its UUID and returns it if found. Returns null if the component is not found.
 - `findComment<T extends NamedComponent>(String comment)` - Searches for a component by comment. This is useful if components have been marked with comments for further identification.
+- `MapPbx copyWith({String? uuid, List<NamedComponent>? children, String? comment, bool? isInline})` - Creates a copy with the possibility of replacing its components.
+- `bool isInline` - Controls whether the map is rendered in a single line (e.g. PBXBuildFile entries) or in a multiline format. Set automatically during parsing.
 
 #### Example
 
@@ -303,7 +305,23 @@ configurations, and other collections of elements related to the project.
 
 - `operator [](int index)` - Provides access to list elements by index.
 - `int get length` - Returns the number of elements in the list.
-- `void add(ElementOfListPbx element)` - Adds an element to the list.
+- `bool get isEmpty` - Returns `true` if the list has no elements.
+- `bool get isNotEmpty` - Returns `true` if the list has at least one element.
+- `ElementOfListPbx get first` - Returns the first element.
+- `ElementOfListPbx get last` - Returns the last element.
+- `void add(ElementOfListPbx element)` - Adds an element to the end of the list.
+- `void insert(int index, ElementOfListPbx element)` - Inserts an element at the given index.
+- `void insertAll(int index, Iterable<ElementOfListPbx> iterable)` - Inserts all elements at the given index.
+- `void remove(Object? value)` - Removes the first occurrence of value from the list.
+- `ElementOfListPbx removeAt(int index)` - Removes and returns the element at the given index.
+- `ElementOfListPbx removeLast()` - Removes and returns the last element.
+- `int indexOf(ElementOfListPbx element, [int start = 0])` - Returns the index of the first occurrence of element.
+- `int indexWhere(bool Function(ElementOfListPbx e) test, [int start = 0])` - Returns the index of the first element that satisfies the test.
+- `bool any(bool Function(ElementOfListPbx e) test)` - Returns `true` if any element satisfies the test.
+- `Iterable<ElementOfListPbx> where(bool Function(ElementOfListPbx e) test)` - Returns elements that satisfy the test.
+- `Iterable<T> map<T>(T Function(ElementOfListPbx e) toElement)` - Maps each element to a new value.
+- `List<ElementOfListPbx> toList()` - Returns a copy of the elements as a list.
+- `Iterator<ElementOfListPbx> get iterator` - Returns an iterator for the list elements.
 - `String toString({int indentLevel = 0, bool removeN = false})` - Returns a string representation of the object, considering the indentation level and the need to remove line breaks. Designed to form a correct output of the list in a .pbxproj file.
 - `ListPbx copyWith({String? uuid, List<ElementOfListPbx>? children, String? comment})` - Creates a copy of the current list object with the possibility of replacing its components. This is useful when needing to change the list without affecting the original object.
 
