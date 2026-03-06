@@ -8,11 +8,11 @@ void main() {
 
     setUp(() {
       component = MapEntryPbx(
-        '123',
-        VarPbx('TestComponent'),
-        comment: 'TestComment',
+        'isa',
+        VarPbx('PBXBuildFile'),
+        comment: 'Sources',
       );
-      section = SectionPbx(name: 'TestSection');
+      section = SectionPbx(name: 'PBXBuildFile');
     });
 
     test('Add NamedComponent', () {
@@ -31,9 +31,9 @@ void main() {
     test('Replace or Add NamedComponent', () {
       section.add(component);
       final newComponent = MapEntryPbx(
-        '123',
-        VarPbx('NewComponent'),
-        comment: 'NewComment',
+        'isa',
+        VarPbx('PBXFileReference'),
+        comment: 'References',
       );
       section.replaceOrAdd(newComponent);
       expect(section.childrenList, contains(newComponent));
@@ -42,42 +42,41 @@ void main() {
 
     test('Find NamedComponent by UUID', () {
       section.add(component);
-      final foundComponent = section.find<MapEntryPbx<VarPbx>>('123');
-      expect(foundComponent, component);
+      final found = section.find<MapEntryPbx<VarPbx>>('isa');
+      expect(found, component);
     });
 
     test('Find NamedComponent by Comment', () {
       section.add(component);
-      final foundComponent =
-          section.findComment<MapEntryPbx<VarPbx>>('TestComment');
-      expect(foundComponent, component);
+      final found = section.findComment<MapEntryPbx<VarPbx>>('Sources');
+      expect(found, component);
     });
 
     test('String representation', () {
       section.add(component);
       final str = section.toString();
-      expect(str.contains('/* Begin TestSection section */'), isTrue);
-      expect(str.contains('123 = TestComponent /* TestComment */;'), isTrue);
-      expect(str.contains('/* End TestSection section */'), isTrue);
+      expect(str.contains('/* Begin PBXBuildFile section */'), isTrue);
+      expect(str.contains('isa = PBXBuildFile /* Sources */;'), isTrue);
+      expect(str.contains('/* End PBXBuildFile section */'), isTrue);
     });
 
     test('CopyWith method', () {
       section.add(component);
       final newComponent = MapEntryPbx(
-        '456',
-        VarPbx('NewComponent'),
-        comment: 'NewComment',
+        'fileRef',
+        VarPbx('AA11BB22CC33DD44EE55FF66'),
+        comment: 'AppDelegate.swift',
       );
-      final copiedSection = section.copyWith(
-        name: 'NewSection',
+      final copied = section.copyWith(
+        name: 'PBXFileReference',
         children: [newComponent],
       );
 
-      expect(copiedSection.name, 'NewSection');
-      expect(copiedSection.childrenList, contains(newComponent));
-      expect(copiedSection.childrenMap[newComponent.uuid], newComponent);
-      expect(copiedSection.childrenList, isNot(contains(component)));
-      expect(copiedSection.childrenMap[component.uuid], isNull);
+      expect(copied.name, 'PBXFileReference');
+      expect(copied.childrenList, contains(newComponent));
+      expect(copied.childrenMap[newComponent.uuid], newComponent);
+      expect(copied.childrenList, isNot(contains(component)));
+      expect(copied.childrenMap[component.uuid], isNull);
     });
   });
 }

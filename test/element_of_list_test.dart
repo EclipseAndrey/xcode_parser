@@ -7,46 +7,47 @@ void main() {
 
     setUp(() {
       element = ElementOfListPbx(
-        'TestValue',
-        comment: 'TestComment',
+        'AA11BB22CC33DD44EE55FF66',
+        comment: 'main.swift in Sources',
       );
     });
 
     test('String representation with comment', () {
       final str = element.toString(indentLevel: 0, removeN: false);
-      expect(str, 'TestValue /* TestComment */,');
+      expect(str, 'AA11BB22CC33DD44EE55FF66 /* main.swift in Sources */,');
     });
 
     test('String representation without comment', () {
-      element = ElementOfListPbx('TestValue');
+      element = ElementOfListPbx('BB22CC33DD44EE55FF660011');
       final str = element.toString(indentLevel: 0, removeN: false);
-      expect(str, 'TestValue,');
+      expect(str, 'BB22CC33DD44EE55FF660011,');
     });
 
     test('String representation with indentation', () {
       final str = element.toString(indentLevel: 2, removeN: false);
-      expect(str, '\t\tTestValue /* TestComment */,');
+      expect(str,
+          '\t\tAA11BB22CC33DD44EE55FF66 /* main.swift in Sources */,');
     });
 
     test('CopyWith method with new value', () {
-      final copiedElement = element.copyWith(
-        value: 'NewValue',
-        comment: 'NewComment',
+      final copied = element.copyWith(
+        value: 'CC33DD44EE55FF6600112233',
+        comment: 'Assets.xcassets in Resources',
       );
-      expect(copiedElement.value, 'NewValue');
-      expect(copiedElement.comment, 'NewComment');
+      expect(copied.value, 'CC33DD44EE55FF6600112233');
+      expect(copied.comment, 'Assets.xcassets in Resources');
     });
 
     test('CopyWith method with partial changes', () {
-      final copiedElement = element.copyWith(value: 'NewValue');
-      expect(copiedElement.value, 'NewValue');
-      expect(copiedElement.comment, 'TestComment');
+      final copied = element.copyWith(value: 'DD44EE55FF66001122334455');
+      expect(copied.value, 'DD44EE55FF66001122334455');
+      expect(copied.comment, 'main.swift in Sources');
     });
 
     test('CopyWith method without changes', () {
-      final copiedElement = element.copyWith();
-      expect(copiedElement.value, 'TestValue');
-      expect(copiedElement.comment, 'TestComment');
+      final copied = element.copyWith();
+      expect(copied.value, 'AA11BB22CC33DD44EE55FF66');
+      expect(copied.comment, 'main.swift in Sources');
     });
   });
 }

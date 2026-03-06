@@ -6,30 +6,27 @@ void main() {
     late VarPbx varPbx;
 
     setUp(() {
-      varPbx = VarPbx('TestValue');
+      varPbx = VarPbx('sourcecode.swift');
     });
 
-    test(
-        'String representation without indentation and without newline removal',
-        () {
+    test('String representation without indentation', () {
       final str = varPbx.toString(indentLevel: 0, removeN: false);
-      expect(str, 'TestValue');
+      expect(str, 'sourcecode.swift');
     });
 
-    test('String representation with indentation and without newline removal',
-        () {
+    test('String representation with indentation', () {
       final str = varPbx.toString(indentLevel: 2, removeN: false);
-      expect(str, 'TestValue');
+      expect(str, 'sourcecode.swift');
     });
 
     test('CopyWith method with new value', () {
-      final copiedVarPbx = varPbx.copyWith(value: 'NewValue');
-      expect(copiedVarPbx.value, 'NewValue');
+      final copied = varPbx.copyWith(value: 'folder.assetcatalog');
+      expect(copied.value, 'folder.assetcatalog');
     });
 
     test('CopyWith method with same value', () {
-      final copiedVarPbx = varPbx.copyWith();
-      expect(copiedVarPbx.value, 'TestValue');
+      final copied = varPbx.copyWith();
+      expect(copied.value, 'sourcecode.swift');
     });
   });
 }

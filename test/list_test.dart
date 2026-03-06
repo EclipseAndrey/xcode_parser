@@ -8,14 +8,17 @@ void main() {
 
     setUp(() {
       element = ElementOfListPbx(
-        'TestValue',
-        comment: 'TestComment',
+        'AA11BB22CC33DD44EE55FF66',
+        comment: 'main.swift in Sources',
       );
-      listPbx = ListPbx('TestListPbx', [element]);
+      listPbx = ListPbx('files', [element]);
     });
 
     test('Add ElementOfListPbx', () {
-      final newElement = ElementOfListPbx('NewValue', comment: 'NewComment');
+      final newElement = ElementOfListPbx(
+        'BB22CC33DD44EE55FF660011',
+        comment: 'Assets.xcassets in Resources',
+      );
       listPbx.add(newElement);
       expect(listPbx.length, 2);
       expect(listPbx[1], newElement);
@@ -31,38 +34,44 @@ void main() {
 
     test('String representation', () {
       final str = listPbx.toString();
-      expect(str.contains('TestListPbx = ('), isTrue);
-      expect(str.contains('TestValue /* TestComment */,'), isTrue);
+      expect(str.contains('files = ('), isTrue);
+      expect(
+          str.contains(
+              'AA11BB22CC33DD44EE55FF66 /* main.swift in Sources */,'),
+          isTrue);
       expect(str.contains(');'), isTrue);
     });
 
     test('CopyWith method', () {
-      final newElement = ElementOfListPbx('NewValue', comment: 'NewComment');
-      final copiedListPbx = listPbx.copyWith(
-        uuid: 'NewListPbx',
+      final newElement = ElementOfListPbx(
+        'CC33DD44EE55FF6600112233',
+        comment: 'LaunchScreen.storyboard in Resources',
+      );
+      final copied = listPbx.copyWith(
+        uuid: 'buildPhases',
         children: [newElement],
       );
 
-      expect(copiedListPbx.uuid, 'NewListPbx');
-      expect(copiedListPbx.length, 1);
-      expect(copiedListPbx[0], newElement);
-      expect(copiedListPbx.comment, listPbx.comment);
+      expect(copied.uuid, 'buildPhases');
+      expect(copied.length, 1);
+      expect(copied[0], newElement);
+      expect(copied.comment, listPbx.comment);
     });
 
     test('CopyWith method with partial changes', () {
-      final copiedListPbx = listPbx.copyWith(comment: 'NewComment');
-      expect(copiedListPbx.uuid, listPbx.uuid);
-      expect(copiedListPbx.length, 1);
-      expect(copiedListPbx[0], element);
-      expect(copiedListPbx.comment, 'NewComment');
+      final copied = listPbx.copyWith(comment: 'build files');
+      expect(copied.uuid, listPbx.uuid);
+      expect(copied.length, 1);
+      expect(copied[0], element);
+      expect(copied.comment, 'build files');
     });
 
     test('CopyWith method without changes', () {
-      final copiedListPbx = listPbx.copyWith();
-      expect(copiedListPbx.uuid, listPbx.uuid);
-      expect(copiedListPbx.length, listPbx.length);
-      expect(copiedListPbx[0], element);
-      expect(copiedListPbx.comment, listPbx.comment);
+      final copied = listPbx.copyWith();
+      expect(copied.uuid, listPbx.uuid);
+      expect(copied.length, listPbx.length);
+      expect(copied[0], element);
+      expect(copied.comment, listPbx.comment);
     });
   });
 }

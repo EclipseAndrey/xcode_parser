@@ -1,7 +1,32 @@
 // !$*UTF8*$!
 {
-	6E7BA751AB5916B880C696DB = {};
-	A44DDEF882DADC16A105A73F = {};
-	178C3B18BC6D23628F39E558 = {};
-	0839271476332C2104896782 = {0839271476332C2104896782 = testValue; };
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 54;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		AA11BB22CC33DD44EE55FF66 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB22CC33DD44EE55FF660011 /* AppDelegate.swift */; };
+		CC33DD44EE55FF6600112233 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = DD44EE55FF66001122334455 /* Assets.xcassets */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXFileReference section */
+		BB22CC33DD44EE55FF660011 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
+		DD44EE55FF66001122334455 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXGroup section */
+		EE55FF66001122334455AABB = {
+			isa = PBXGroup;
+			children = (
+				BB22CC33DD44EE55FF660011 /* AppDelegate.swift */,
+				DD44EE55FF66001122334455 /* Assets.xcassets */,
+			);
+			path = MyApp;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+	};
+	rootObject = AABBCCDDEEFF001122334455 /* Project object */;
 }

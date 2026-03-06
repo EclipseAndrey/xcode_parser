@@ -4,53 +4,53 @@ import 'package:xcode_parser/xcode_parser.dart';
 void main() {
   group('MapEntryPbx Tests', () {
     late MapEntryPbx<VarPbx> mapEntryPbx;
-    late VarPbx component;
+    late VarPbx value;
 
     setUp(() {
-      component = VarPbx('TestComponent');
+      value = VarPbx('PBXBuildFile');
       mapEntryPbx = MapEntryPbx(
-        '123',
-        component,
-        comment: 'TestComment',
+        'isa',
+        value,
+        comment: 'Sources',
       );
     });
 
     test('String representation without indentation and with comment', () {
       final str = mapEntryPbx.toString(indentLevel: 0, removeN: true);
-      expect(str, '123 = TestComponent /* TestComment */; ');
+      expect(str, 'isa = PBXBuildFile /* Sources */; ');
     });
 
     test('String representation with indentation and without comment', () {
       mapEntryPbx = MapEntryPbx(
-        '123',
-        component,
+        'isa',
+        value,
       );
       final str = mapEntryPbx.toString(indentLevel: 2, removeN: false);
-      expect(str, '\t\t123 = TestComponent;\n');
+      expect(str, '\t\tisa = PBXBuildFile;\n');
     });
 
     test('CopyWith method', () {
-      final newComponent = VarPbx('NewComponent');
-      final copiedMapEntryPbx = mapEntryPbx.copyWith(
-        uuid: '456',
-        value: newComponent,
-        comment: 'NewComment',
+      final newValue = VarPbx('PBXFileReference');
+      final copied = mapEntryPbx.copyWith(
+        uuid: 'fileRef',
+        value: newValue,
+        comment: 'AppDelegate.swift',
       );
 
-      expect(copiedMapEntryPbx.uuid, '456');
-      expect(copiedMapEntryPbx.value, newComponent);
-      expect(copiedMapEntryPbx.comment, 'NewComment');
+      expect(copied.uuid, 'fileRef');
+      expect(copied.value, newValue);
+      expect(copied.comment, 'AppDelegate.swift');
     });
 
     test('CopyWith method with partial changes', () {
-      final newComponent = VarPbx('NewComponent');
-      final copiedMapEntryPbx = mapEntryPbx.copyWith(
-        value: newComponent,
+      final newValue = VarPbx('PBXGroup');
+      final copied = mapEntryPbx.copyWith(
+        value: newValue,
       );
 
-      expect(copiedMapEntryPbx.uuid, '123');
-      expect(copiedMapEntryPbx.value, newComponent);
-      expect(copiedMapEntryPbx.comment, 'TestComment');
+      expect(copied.uuid, 'isa');
+      expect(copied.value, newValue);
+      expect(copied.comment, 'Sources');
     });
   });
 }

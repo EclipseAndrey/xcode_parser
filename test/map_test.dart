@@ -8,11 +8,11 @@ void main() {
 
     setUp(() {
       component = MapEntryPbx(
-        '123',
-        VarPbx('TestComponent'),
-        comment: 'TestComment',
+        'isa',
+        VarPbx('PBXGroup'),
+        comment: 'Sources',
       );
-      mapPbx = MapPbx(uuid: 'TestMapPbx');
+      mapPbx = MapPbx(uuid: 'AA11BB22CC33DD44EE55FF66');
     });
 
     test('Add NamedComponent', () {
@@ -31,59 +31,79 @@ void main() {
     test('Replace or Add NamedComponent', () {
       mapPbx.add(component);
       final newComponent = MapEntryPbx(
-        '1234',
-        VarPbx('NewComponent'),
-        comment: 'NewComment',
+        'name',
+        VarPbx('Products'),
+        comment: 'Products',
       );
       mapPbx.replaceOrAdd(newComponent);
       expect(mapPbx[newComponent.uuid], newComponent);
 
-      final newComponent2 = newComponent.copyWith(
-        value: VarPbx('NewComponent2'),
+      final updated = newComponent.copyWith(
+        value: VarPbx('Frameworks'),
       );
 
-      mapPbx.replaceOrAdd(newComponent2);
-      expect(mapPbx[newComponent.uuid], newComponent2);
+      mapPbx.replaceOrAdd(updated);
+      expect(mapPbx[newComponent.uuid], updated);
     });
 
     test('Find NamedComponent by UUID', () {
       mapPbx.add(component);
-      final foundComponent = mapPbx.find<MapEntryPbx<VarPbx>>('123');
-      expect(foundComponent, component);
+      final found = mapPbx.find<MapEntryPbx<VarPbx>>('isa');
+      expect(found, component);
     });
 
     test('Find NamedComponent by Comment', () {
       mapPbx.add(component);
-      final foundComponent =
-          mapPbx.findComment<MapEntryPbx<VarPbx>>('TestComment');
-      expect(foundComponent, component);
+      final found = mapPbx.findComment<MapEntryPbx<VarPbx>>('Sources');
+      expect(found, component);
     });
 
-    test('String representation', () {
+    test('String representation multiline', () {
       mapPbx.add(component);
       final str = mapPbx.toString();
-      expect(str.contains('TestMapPbx = {'), isTrue);
-      expect(str.contains('123 = TestComponent /* TestComment */;'), isTrue);
+      expect(str.contains('AA11BB22CC33DD44EE55FF66 = {'), isTrue);
+      expect(str.contains('isa = PBXGroup /* Sources */;'), isTrue);
       expect(str.contains('};'), isTrue);
+    });
+
+    test('String representation inline', () {
+      final inlineMap = MapPbx(
+        uuid: 'BB22CC33DD44EE55FF660011',
+        comment: 'main.swift in Sources',
+        isInline: true,
+        children: [
+          MapEntryPbx('isa', VarPbx('PBXBuildFile')),
+          MapEntryPbx('fileRef', VarPbx('CC33DD44EE55FF6600112233'),
+              comment: 'main.swift'),
+        ],
+      );
+      final str = inlineMap.toString();
+      expect(str.contains('\n\n'), isFalse);
+      expect(str.startsWith('BB22CC33DD44EE55FF660011 /* main.swift in Sources */ = {'), isTrue);
+      expect(str.trimRight().endsWith('};'), isTrue);
     });
 
     test('CopyWith method', () {
       mapPbx.add(component);
       final newComponent = MapEntryPbx(
-        '456',
-        VarPbx('NewComponent'),
-        comment: 'NewComment',
+        'path',
+        VarPbx('Sources'),
       );
-      final copiedMapPbx = mapPbx.copyWith(
-        uuid: 'NewMapPbx',
+      final copied = mapPbx.copyWith(
+        uuid: 'CC33DD44EE55FF6600112233',
         children: [newComponent],
       );
 
-      expect(copiedMapPbx.uuid, 'NewMapPbx');
-      expect(copiedMapPbx.childrenList, contains(newComponent));
-      expect(copiedMapPbx.childrenMap[newComponent.uuid], newComponent);
-      expect(copiedMapPbx.childrenList, isNot(contains(component)));
-      expect(copiedMapPbx.childrenMap[component.uuid], isNull);
+      expect(copied.uuid, 'CC33DD44EE55FF6600112233');
+      expect(copied.childrenList, contains(newComponent));
+      expect(copied.childrenMap[newComponent.uuid], newComponent);
+      expect(copied.childrenList, isNot(contains(component)));
+      expect(copied.childrenMap[component.uuid], isNull);
+    });
+
+    test('CopyWith isInline', () {
+      final copied = mapPbx.copyWith(isInline: true);
+      expect(copied.isInline, isTrue);
     });
   });
 }
