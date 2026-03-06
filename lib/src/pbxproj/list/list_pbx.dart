@@ -12,7 +12,9 @@ class ListPbx extends NamedComponent {
   })  : _children = children,
         super(uuid: uuid);
 
-  operator [](int index) => _children[index];
+  Iterator<ElementOfListPbx> get iterator => _children.iterator;
+
+  ElementOfListPbx operator [](int index) => _children[index];
   int get length => _children.length;
 
   @override
@@ -46,6 +48,18 @@ class ListPbx extends NamedComponent {
 
   int indexWhere(bool Function(ElementOfListPbx e) test, [int start = 0]) =>
       _children.indexWhere(test, start);
+
+  bool get isEmpty => _children.isEmpty;
+
+  bool get isNotEmpty => _children.isNotEmpty;
+
+  Iterable<ElementOfListPbx> where(bool Function(ElementOfListPbx e) test) =>
+      _children.where(test);
+
+  Iterable<T> map<T>(T Function(ElementOfListPbx e) toElement) =>
+      _children.map(toElement);
+
+  List<ElementOfListPbx> toList() => List.from(_children);
 
   ElementOfListPbx get first => _children.first;
 
