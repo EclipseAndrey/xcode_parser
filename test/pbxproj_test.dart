@@ -58,7 +58,7 @@ void main() {
       final file = File(tempFilePath);
       expect(await file.exists(), isTrue);
       final content = await file.readAsString();
-      expect(content.contains('// !\$*UTF8*\$!\n{\n}'), isTrue);
+      expect(content.contains('// !\$*UTF8*\$!\n{\n}\n'), isTrue);
     });
 
     test('Add NamedComponent', () {
@@ -110,7 +110,7 @@ void main() {
 
     test('String representation', () {
       final str = pbxproj.toString();
-      expect(str.contains('// !\$*UTF8*\$!\n{\n}'), isTrue);
+      expect(str.contains('// !\$*UTF8*\$!\n{\n}\n'), isTrue);
     });
 
     test('CopyWith method', () {

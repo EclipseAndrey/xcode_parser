@@ -36,7 +36,7 @@ class Pbxproj extends ChildrenComponent {
     sb.write('// !\$*UTF8*\$!\n');
     sb.write('$indent{\n');
     sb.write(super.toString(indentLevel: indentLevel));
-    sb.write('$indent}');
+    sb.write('$indent}\n');
     return sb.toString();
   }
 

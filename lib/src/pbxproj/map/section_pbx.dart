@@ -14,9 +14,9 @@ class SectionPbx extends ChildrenNamedComponent {
     StringBuffer sb = StringBuffer();
     sb.write('\n/* Begin $name section */\n');
     for (int i = 0; i < childrenList.length; i++) {
-      sb.writeln('${childrenList[i].toString(indentLevel: indentLevel)}\n');
+      sb.write(childrenList[i].toString(indentLevel: indentLevel));
     }
-    sb.write('\n/* End $name section */\n');
+    sb.write('/* End $name section */\n');
     return sb.toString();
   }
 

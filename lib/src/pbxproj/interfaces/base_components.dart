@@ -1,6 +1,6 @@
 abstract class PbxprojComponent {
   String formatOutput(String output) {
-    return output.replaceAll(RegExp(r'\n+'), '\n');
+    return output.replaceAll(RegExp(r'\n{3,}'), '\n\n');
   }
 
   @override

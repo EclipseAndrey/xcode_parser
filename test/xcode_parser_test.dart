@@ -36,19 +36,20 @@ void main() {
     });
 
     test('Open Pbxproj file with multiple comments', () async {
-      final inputContents = '''// !\$*UTF8*\$!
-{
-	// !\$*UTF8*\$!
-	// !\$*UTF8*\$!
-	// !\$*UTF8*\$!
-	// !\$*UTF8*\$!
-	// !\$*UTF8*\$!
-	// !\$*UTF8*\$!
-	// !\$*UTF8*\$!
-	archiveVersion = 1;
-	classes = {};
-	objectVersion = 54;
-}''';
+      final inputContents = '// !\$*UTF8*\$!\n'
+          '{\n'
+          '\t// !\$*UTF8*\$!\n'
+          '\t// !\$*UTF8*\$!\n'
+          '\t// !\$*UTF8*\$!\n'
+          '\t// !\$*UTF8*\$!\n'
+          '\t// !\$*UTF8*\$!\n'
+          '\t// !\$*UTF8*\$!\n'
+          '\t// !\$*UTF8*\$!\n'
+          '\tarchiveVersion = 1;\n'
+          '\tclasses = {\n'
+          '\t};\n'
+          '\tobjectVersion = 54;\n'
+          '}\n';
       final file = File(tempFilePath);
       await file.create(recursive: true);
       await file.writeAsString(inputContents);
@@ -167,6 +168,7 @@ void main() {
                 uuid: 'childMap',
                 comment: 'comment',
                 children: [],
+                isInline: true,
               ),
             ],
           ),

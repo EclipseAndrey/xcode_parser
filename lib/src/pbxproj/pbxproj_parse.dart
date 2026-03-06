@@ -266,6 +266,7 @@ Pbxproj parsePbxproj(String content, String path, {bool debug = false}) {
     skipPattern('=');
     List<NamedComponent> children = [];
     SectionPbx? sectionPbx;
+    int? contentStartIndex;
 
     addChild(NamedComponent component) {
       if (sectionPbx != null) {
@@ -278,10 +279,20 @@ Pbxproj parsePbxproj(String content, String path, {bool debug = false}) {
     while (index < content.length) {
       if (current().startsWith('{')) {
         skipPattern('{');
+        contentStartIndex ??= index;
         continue;
       } else if (current().startsWith('};')) {
+        // Find actual position of '}' in raw content (before trim)
+        final rawEndIndex = content.indexOf('};', index);
+        final isInline = contentStartIndex != null &&
+            rawEndIndex != -1 &&
+            !content.substring(contentStartIndex, rawEndIndex).contains('\n');
         skipPattern('};');
-        break;
+        return MapPbx(
+            uuid: key,
+            children: children,
+            comment: comment,
+            isInline: isInline);
       }
       // if (current().startsWith(regexEntry)) {
       //   printD('M FOUND Entry');
