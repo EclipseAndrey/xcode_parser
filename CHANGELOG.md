@@ -1,3 +1,12 @@
+## 2.0.0
+
+- Extracted `ChildrenMixin` to eliminate code duplication between `ChildrenComponent` and `ChildrenNamedComponent`
+- Replaced String concatenation with StringBuffer in `toString` methods for better performance
+- Added collection methods to `ListPbx`: `iterator`, `where`, `map`, `isEmpty`, `isNotEmpty`, `toList`
+- Fixed roundtrip serialization: inline/multiline map detection, section formatting, output trailing newline
+- Fixed `formatOutput` to preserve intentional blank lines between sections
+- Rewritten tests with realistic anonymous pbxproj data and roundtrip tests
+
 ## 1.3.1
 - Fixed leading comment count increase
 - Fixed saving file with multiple comments
