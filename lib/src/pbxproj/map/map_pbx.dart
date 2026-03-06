@@ -16,11 +16,11 @@ class MapPbx extends ChildrenNamedComponent {
 
     String indent = Pbxproj.indent(indentLevel);
     String commentOut = comment != null ? ' /* $comment */' : '';
-    String sb = '';
+    final sb = StringBuffer();
     final n = allEntry ? '' : '\n';
-    sb += ('$indent$uuid$commentOut = {$n');
-    sb += (super.toString(indentLevel: indentLevel, removeN: allEntry));
-    sb += ('${allEntry ? '' : indent}};${removeN ? ' ' : '\n'}');
+    sb.write('$indent$uuid$commentOut = {$n');
+    sb.write(super.toString(indentLevel: indentLevel, removeN: allEntry));
+    sb.write('${allEntry ? '' : indent}};${removeN ? ' ' : '\n'}');
     return sb.toString();
   }
 
