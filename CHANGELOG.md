@@ -1,3 +1,10 @@
+## 2.1.0
+
+- Added Web and WASM platform compatibility
+- Removed direct `dart:io` dependency from the library using conditional imports
+- `Pbxproj.open()` and `save()` remain available on native platforms (iOS, Android, macOS, Linux, Windows)
+- On Web/WASM, use `Pbxproj.parse(content)` and `toString()` for parsing and serialization
+
 ## 2.0.0
 
 - Extracted `ChildrenMixin` to eliminate code duplication between `ChildrenComponent` and `ChildrenNamedComponent`

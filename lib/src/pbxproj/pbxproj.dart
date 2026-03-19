@@ -1,9 +1,11 @@
-import 'dart:io' as io;
 import 'dart:math';
 
 import 'package:xcode_parser/src/pbxproj/interfaces/base_components.dart';
 import 'package:xcode_parser/src/pbxproj/interfaces/children_component.dart';
 import 'package:xcode_parser/src/pbxproj/pbxproj_parse.dart';
+
+import 'pbxproj_file_stub.dart'
+    if (dart.library.io) 'pbxproj_file_io.dart';
 
 class Pbxproj extends ChildrenComponent {
   final String path;
@@ -63,13 +65,10 @@ class Pbxproj extends ChildrenComponent {
   /// The [parsePbxproj] function is likely a custom function that parses
   /// the content of the file and returns a [Pbxproj] object.
   ///
-  /// This method is not available on Web
+  /// Throws [UnsupportedError] on Web and WASM platforms.
+  /// Use [Pbxproj.parse] for platform-independent parsing.
   static Future<Pbxproj> open(String path) async {
-    final file = io.File(path);
-    if (!await file.exists()) {
-      await file.create(recursive: true);
-    }
-    final content = await file.readAsString();
+    final content = await readFileContent(path);
     if (content.isEmpty) {
       return Pbxproj(path: path);
     }
@@ -80,13 +79,9 @@ class Pbxproj extends ChildrenComponent {
   /// It creates a [File] object from a specified [path] and writes
   /// the result of calling the [toString] method into the file asynchronously.
   ///
-  /// This method is not available on Web
+  /// Throws [UnsupportedError] on Web and WASM platforms.
   Future<void> save() async {
-    final file = io.File(path);
-    if (!await file.exists()) {
-      await file.create();
-    }
-    await file.writeAsString(formatOutput(toString()));
+    await writeFileContent(path, formatOutput(toString()));
   }
 
   /// The [generateUuid] method generates a unique identifier (UUID) by

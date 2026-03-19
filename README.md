@@ -28,6 +28,7 @@ files, which is especially useful for automating iOS development tasks.
 - Reading and analyzing the contents of .pbxproj files.
 - Modifying project settings and configurations.
 - Saving changes to .pbxproj files.
+- Compatible with Web and WASM platforms.
 
 
 | Dart                                                                                    | example.pbxproj                                                                       |
@@ -39,7 +40,7 @@ files, which is especially useful for automating iOS development tasks.
 Incorporate the package into your Dart or Flutter project by adding it as a dependency in your `pubspec.yaml` file:
 ```yaml
 dependencies:
-  xcode_parser: ^2.0.0
+  xcode_parser: ^2.1.0
 ```
 or
 ```shell
@@ -60,6 +61,21 @@ dart pub add xcode_parser
 
 
 
+## Web & WASM
+
+On Web and WASM platforms, `dart:io` is not available, so `Pbxproj.open()` and `save()` will throw `UnsupportedError`. Use `Pbxproj.parse(content)` for parsing and `toString()` for serialization instead. File reading and writing should be handled on the caller side (e.g. via `<input type="file">`, `fetch`, or any other Web API).
+
+```dart
+// Web/WASM usage example
+final content = await fetchPbxprojContent(); // your own fetch logic
+final project = Pbxproj.parse(content);
+
+// modify project...
+
+final output = project.toString();
+await uploadPbxprojContent(output); // your own upload logic
+```
+
 ## Objects
 
 ### Pbxproj
@@ -79,8 +95,8 @@ isolates to prevent blocking the main thread.
 ```
 
 - `factory Pbxproj.parse(String content, {String path})` - Analyzes the given .pbxproj file content. Parameter path - optional path to the .pbxproj file to be outputted. Returns: `Pbxproj` — an instance of Pbxproj after analyzing the content
-- `static Future<Pbxproj> open(String path)` - Opens and analyzes the .pbxproj file at the specified path. Parameter path - path to the .pbxproj file. Returns: `Future<Pbxproj>` — an asynchronous result that contains an instance of Pbxproj after reading and analyzing the file. Not available on Web.
-- `Future<void> save()` - Saves the current state of the Pbxproj object back to the .pbxproj file. Not available on Web.
+- `static Future<Pbxproj> open(String path)` - Opens and analyzes the .pbxproj file at the specified path. Parameter path - path to the .pbxproj file. Returns: `Future<Pbxproj>` — an asynchronous result that contains an instance of Pbxproj after reading and analyzing the file. Only available on native platforms (throws `UnsupportedError` on Web/WASM).
+- `Future<void> save()` - Saves the current state of the Pbxproj object back to the .pbxproj file. Only available on native platforms (throws `UnsupportedError` on Web/WASM).
 - `String generateUuid()` - Generates a unique identifier (UUID), which can be used for new project components.
 - `void add(NamedComponent component)` - Adds a new component to the project.
 - `void remove(String uuid)` - Removes a component from the project by its UUID.
